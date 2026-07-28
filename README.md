@@ -18,7 +18,7 @@
 | **Langage**     | Python 3.10+                                                                   |
 | **Package Manager** | [`uv`](https://docs.astral.sh/uv/) (ultra-rapide, remplace pip et venv)     |
 | **Backend**     | FastAPI, Uvicorn                                                               |
-| **Base de données** | SQLite (via SQLAlchemy ORM)                                                 |
+| **Base de données** | PostgreSQL 16.13                                              |
 | **Scraping**    | Requests, BeautifulSoup4                                                       |
 | **IA / NLP**    | HuggingFace Transformers (PyTorch)                                             |
 | **Tâches planifiées** | APScheduler                                                           |
