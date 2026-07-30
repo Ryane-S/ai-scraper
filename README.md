@@ -6,7 +6,7 @@
 
 - **🕷️ Scraping intelligent** : Récupère les titres et contenus depuis des sources d'actu tech (via `Requests` & `BeautifulSoup`).
 - **🧠 Résumé automatique** : Utilise un modèle Transformer (`facebook/bart-large-cnn`) pour synthétiser les articles en quelques phrases.
-- **💾 Persistance des données** : Stocke les articles dans une base SQLite (évite les doublons grâce aux contraintes d'unicité).
+- **💾 Persistance des données** : Stocke les articles dans une base Postgres.
 - **⚡ API RESTful** : Construite avec FastAPI, elle expose les articles en JSON avec une documentation interactive générée automatiquement (`/docs`).
 - **🖥️ Frontend minimal** : Une page HTML/CSS/JS statique qui consomme l'API et affiche les résumés sous forme de cartes.
 - **⏰ Mise à jour automatique** : Un scheduler (APScheduler) lance le scraping en arrière-plan toutes les X heures.
