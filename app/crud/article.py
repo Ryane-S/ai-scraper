@@ -1,8 +1,9 @@
+
 from sqlalchemy.orm import Session
+
 from app.models.article import Article
 from app.schemas.article import ArticleCreate
 
-from typing import Optional
 
 def create_article(db:Session, article_data:ArticleCreate) -> Article:
     """Méthode de création d'un article en BDD."""
@@ -13,7 +14,7 @@ def create_article(db:Session, article_data:ArticleCreate) -> Article:
     db.refresh(db_article)
     return db_article
 
-def get_article_by_id(db:Session, article_id:int) -> Optional[Article]:
+def get_article_by_id(db:Session, article_id:int) -> Article | None:
     """Méthode de lecture d'un article en particulier."""
     return db.query(Article).filter(Article.id == article_id).first()
 

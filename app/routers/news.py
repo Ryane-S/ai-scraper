@@ -1,4 +1,4 @@
-from fastapi import APIRouter, HTTPException, Depends
+from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 
 from app.core.database import get_db
@@ -12,10 +12,10 @@ def get_article(article_id:int, db:Session = Depends(get_db)):
     """Route pour obtenir un article en particulier avec son id."""
     article = get_article_by_id(db, article_id)
     if article is None:
-        raise HTTPException(status_code=404, detail="Artile non trouvé")
+        raise HTTPException(status_code=404, detail="Article non trouvé")
     return article
 
 @router.get("/articles", response_model=list[ArticleResponse])
 def get_news(db:Session = Depends(get_db)):
-    """Route pour obtenir tous les articles."""
+    """Route pour obtenir la liste de tous les articles."""
     return get_all_articles(db)

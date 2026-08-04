@@ -1,5 +1,7 @@
-from pydantic import BaseModel, Field
 from datetime import datetime
+
+from pydantic import BaseModel, Field
+
 
 class ArticleBase(BaseModel):
     """Schema de base pour un article."""
@@ -10,7 +12,6 @@ class ArticleBase(BaseModel):
 
 class ArticleCreate(ArticleBase):
     """Schema de base pour créer un article."""
-    pass
 
 class ArticleResponse(ArticleBase):
     id: int

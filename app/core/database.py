@@ -2,10 +2,10 @@ from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 
-from app.core.config import DATABASE_URL
+from app.core.config import settings
 
 # Création du moteur SYNCHRONE
-engine = create_engine(DATABASE_URL)
+engine = create_engine(settings.DATABASE_URL)
 
 # Fabrique de sessions (c'est ce que tu utiliseras pour faire des requêtes)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
