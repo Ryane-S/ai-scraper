@@ -11,3 +11,6 @@
 
 # Environment variables files
 **/.env
+
+# VS Code settings
+**/.vscode

@@ -8,7 +8,7 @@ class Settings(BaseSettings):
     description: str = "Un scraper d'actualité IA avec résumé automatique"
     
     # Connexion BDD (obligatoire - Pydantic va lever une erreur si absent du .env)
-    DATABASE_URL: str  # ou bien PostgresDsn si tu veux la validation
+    DATABASE_URL: str 
 
     class Config:
         env_file = ".env"
