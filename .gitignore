@@ -14,3 +14,6 @@
 
 # VS Code settings
 **/.vscode
+
+# Other files
+**/guide.md

@@ -1,9 +1,10 @@
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, BackgroundTasks, Depends, HTTPException
 from sqlalchemy.orm import Session
 
 from app.core.database import get_db
 from app.crud.article import *
 from app.schemas.article import ArticleResponse
+from app.services.scraper import fetch_and_store_articles
 
 router = APIRouter(prefix="/news", tags=["news"])
 
@@ -19,3 +20,9 @@ def get_article(article_id:int, db:Session = Depends(get_db)):
 def get_news(db:Session = Depends(get_db)):
     """Route pour obtenir la liste de tous les articles."""
     return get_all_articles(db)
+
+@router.post("/scrape")
+def trigger_scrape(bg_tasks: BackgroundTasks):
+    """Route pour déclencher le scraper en background."""
+    bg_tasks.add_task(fetch_and_store_articles)
+    return {"message": "Scraping en cours... Actualisez la liste dans quelques instants."}
