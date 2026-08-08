@@ -11,6 +11,7 @@ class ArticleBase(BaseModel):
     content: str|None = Field(default=None, min_length=1, description="Contenu de l'article")
     summary: str|None = Field(default=None, min_length=1, description="Résumé de l'article")
     date: datetime|None = Field(default=None, description="Date de l'article")
+    image_url: str|None = Field(default=None, min_length=10, max_length=512, description="URL de l'image d'illustration de l'article")
 
 class ArticleCreate(ArticleBase):
     """Schema de base pour créer un article."""

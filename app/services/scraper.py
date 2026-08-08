@@ -25,11 +25,17 @@ def fetch_and_store_articles():
                 description = entry.get('description') # Description
                 pubDate = None # Date de publication
                 if hasattr(entry, 'published'):
-                    try:
-                        pubDate = parser.parse(entry.published)
-                    except (ValueError, TypeError):
-                        # Si la date est mal formée, on laisse None
-                        pass
+                                    try:
+                                        pubDate = parser.parse(entry.published)
+                                    except (ValueError, TypeError):
+                                        # Si la date est mal formée, on laisse None
+                                        pass
+
+                image_url = None # URL de l'image d'illustration
+                if hasattr(entry, 'media_content') and entry.media_content:
+                    image_url = entry.media_content[0].get('url')
+                elif hasattr(entry, 'image') and entry.image:
+                    image_url = entry.image.get('href')
 
                 # On vérifie si l'objet existe déjà en BDD
                 if article_in_db(db, link):
@@ -40,6 +46,7 @@ def fetch_and_store_articles():
                         title = title,
                         url = link,
                         description = description,
+                        image_url= image_url,
                         content = None,
                         summary = None,
                         date = pubDate

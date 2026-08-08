@@ -21,7 +21,7 @@ def get_news(db:Session = Depends(get_db)):
     """Route pour obtenir la liste de tous les articles."""
     return get_all_articles(db)
 
-@router.post("/scrape")
+@router.get("/scrape")
 def trigger_scrape(bg_tasks: BackgroundTasks):
     """Route pour déclencher le scraper en background."""
     bg_tasks.add_task(fetch_and_store_articles)

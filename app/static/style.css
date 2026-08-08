@@ -1,0 +1,19 @@
+* {
+    box-sizing: border-box;
+}
+
+body, html {
+    font-size: 16px;
+    color: rgba(0,0,0,.87);
+    font-family: sans-serif;
+    line-height: 1.6;
+    margin: 0;
+    font-weight: 500;
+    background: oklab(95.602% 0.02079 0.00646);
+}
+
+.main-title{
+    text-align: center;
+    color: red;
+}
+
