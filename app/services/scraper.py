@@ -5,6 +5,7 @@ from app.core.database import SessionLocal
 from app.crud.article import article_in_db, create_article
 from app.schemas.article import ArticleCreate
 
+
 def fetch_and_store_articles():
     URLS = ["https://techcrunch.com/category/artificial-intelligence/feed/"]
     headers = {

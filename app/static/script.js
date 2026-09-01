@@ -13,6 +13,20 @@ async function loadArticles(){
     throw new Error("Impossible de contacter le serveur")
 }
 
+// Méthode qui lance le scraper pour rafraichissement
+async function scrapArticles(){
+    const response = await fetch("http://127.0.0.1:8000/news/scrape", {
+        method: 'POST',
+        headers: {
+            "Accept": "application/json",
+        }
+    })
+    if (response.ok == true){
+        return true
+    }
+    throw new Error("Impossible de contacter le serveur")
+}
+
 // Fetch la liste des articles
 const articles = loadArticles()
     .then(articles => {
@@ -59,3 +73,5 @@ const articles = loadArticles()
         console.error(error);
     });
 
+// Rafraichit la liste des articles
+const button = document.querySelector(".scrapping-button button") // Récupérer la classe du bouton rafraîchir
