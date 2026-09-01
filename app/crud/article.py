@@ -24,7 +24,7 @@ def get_article_by_id(db:Session, article_id:int) -> Article | None:
 
 def get_all_articles(db:Session, skip:int = 0, limit:int = 20) -> list[Article]:
     """Méthode de lecture des 20 articles les plus récents en BDD."""
-    return db.query(Article).order_by(Article.scraped_at.desc()).offset(skip).limit(limit).all()
+    return db.query(Article).order_by(Article.scraped_at.asc()).offset(skip).limit(limit).all()
 
 def delete_article(db:Session, article_id:int) -> bool:
     """Méthode qui supprime un article de la BDD."""
