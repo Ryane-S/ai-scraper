@@ -1,4 +1,4 @@
-from transformers import BartTokenizer, BartForConditionalGeneration
+from transformers import BartForConditionalGeneration, BartTokenizer
 
 # Charger le tokenizer et le modèle (spécifiquement pour la génération conditionnelle)
 model_name = "facebook/bart-large-cnn"
@@ -6,11 +6,12 @@ tokenizer = BartTokenizer.from_pretrained(model_name)
 model = BartForConditionalGeneration.from_pretrained(model_name)
 
 def summarize_article(article_content:str) -> str:
+    """Résume le contenu de l'article."""
     # Tokenizer l'article
     inputs = tokenizer(article_content, return_tensors="pt", truncation=True, max_length=1024)
 
     # Générer le résumé
-    summary_ids = model.generate(
+    summary_ids = model.generate( # type: ignore[misc]
         inputs.input_ids,
         max_length=120,
         min_length=30,

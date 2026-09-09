@@ -32,3 +32,9 @@ explicit = true
 
 [tool.uv.sources]
 torch = { index = "pytorch-cpu" }
+
+[tool.ruff.lint]
+ignore = ["BLE001", "B008", "DTZ005"]
+
+[tool.mypy]
+ignore_missing_imports = true

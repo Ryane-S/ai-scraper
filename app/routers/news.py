@@ -14,6 +14,7 @@ actual_state = {
 }
 
 def run_scraper_with_status():
+    """Lance le scaping et mets à jour le statut."""
     try:
         fetch_and_store_articles()
     except Exception as e:

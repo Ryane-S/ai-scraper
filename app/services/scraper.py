@@ -6,8 +6,10 @@ from app.crud.article import article_in_db, create_article
 from app.schemas.article import ArticleCreate
 from app.services.summarizer import summarize_article
 from app.services.utils import extract_full_article
-            
-def fetch_and_store_articles():
+
+
+def fetch_and_store_articles() -> None:
+    """Fetch les nouveaux articles, les traite et les stocke en BDD."""
     URLS = ["https://techcrunch.com/category/artificial-intelligence/feed/"]
     headers = {
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/127.0.0.0 Safari/537.36'
