@@ -4,8 +4,9 @@ from dateutil import parser
 from app.core.database import SessionLocal
 from app.crud.article import article_in_db, create_article
 from app.schemas.article import ArticleCreate
-
-
+from app.services.summarizer import summarize_article
+from app.services.utils import extract_full_article
+            
 def fetch_and_store_articles():
     URLS = ["https://techcrunch.com/category/artificial-intelligence/feed/"]
     headers = {
@@ -32,24 +33,25 @@ def fetch_and_store_articles():
                                         # Si la date est mal formée, on laisse None
                                         pass
 
-                image_url = None # URL de l'image d'illustration
-                if hasattr(entry, 'media_content') and entry.media_content:
-                    image_url = entry.media_content[0].get('url')
-                elif hasattr(entry, 'image') and entry.image:
-                    image_url = entry.image.get('href')
-
                 # On vérifie si l'objet existe déjà en BDD
                 if article_in_db(db, link):
                     continue
                 # Sinon on le crée et on l'insère
                 else:
+                    # On récupère l'HTML brut de l'article et une image d'illustration
+                    article = extract_full_article(link)
+                    article_content = article["content"]
+                    image_url = article["image"]
+                    # On génère un résumé de l'article
+                    article_summary = summarize_article(article_content=article_content)
+                    # On enregistre l'article dans la BDD
                     article_data = ArticleCreate(
                         title = title,
                         url = link,
                         description = description,
                         image_url= image_url,
-                        content = None,
-                        summary = None,
+                        content = article_content,
+                        summary = article_summary,
                         date = pubDate
                     )
                     create_article(db, article_data)

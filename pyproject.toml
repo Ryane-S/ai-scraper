@@ -19,5 +19,16 @@ dependencies = [
     "requests>=2.34.2",
     "ruff>=0.16.0",
     "sqlalchemy[asyncio]>=2.0.51",
+    "torch>=2.14.0",
+    "trafilatura>=2.2.0",
+    "transformers>=5.17.0",
     "uvicorn>=0.52.1",
 ]
+
+[[tool.uv.index]]
+name = "pytorch-cpu"
+url = "https://download.pytorch.org/whl/cpu"
+explicit = true
+
+[tool.uv.sources]
+torch = { index = "pytorch-cpu" }
