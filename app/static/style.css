@@ -20,7 +20,6 @@ body, html {
 
 .scraping-button{
     text-align: center;
-
 }
 
 .main{
@@ -40,6 +39,51 @@ body, html {
     height: auto;
 }
 
+.article-img-detail{
+    display: block;
+    margin: 0 auto;
+    max-width: 100%;
+    height: auto;
+}
+
+.article-date-detail{
+    text-align: center;
+}
+
+.article-title-detail{
+    text-align: center;
+}
+
+.article:hover{
+    color: red;
+}
+
+#backBtn{
+    margin: 30px;
+}
+
+.hidden {
+    display: none !important;
+}
+
+.detail {
+    display: none;
+    margin: 30px;
+}
+
+.detail p {
+    text-align: justify;
+    hyphens: auto;
+    overflow-wrap: break-word;
+    line-height: 1.6;
+    max-width: 100%
+}
+
+.detail.visible {
+    display: block;
+}
+
 .footer{
     text-align: center;
+    margin: 30px;
 }

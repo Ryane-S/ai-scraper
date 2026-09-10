@@ -1,3 +1,5 @@
+console.log("Script chargé !")
+
 // Méthode qui fetch la liste des articles
 async function loadArticles(){
     const response = await fetch("/news/articles", {
@@ -9,6 +11,21 @@ async function loadArticles(){
     if (response.ok == true){
         const articles = await response.json();
         return articles;
+    }
+    throw new Error("Impossible de contacter le serveur")
+}
+
+// Méthode qui fetch un article en particulier avec son id
+async function loadArticle(id){
+    const response = await fetch(`/news/articles/${id}`, {
+        method: 'GET',
+        headers: {
+            "Accept": "application/json",
+        }
+    })
+    if (response.ok == true){
+        const article = await response.json();
+        return article;
     }
     throw new Error("Impossible de contacter le serveur")
 }
@@ -75,7 +92,7 @@ function displayArticles(articles) {
         }
         // Construire la chaine contenant les infos d'un article
         const articleData = `
-        <article class="article">
+        <article class="article" data-id="${article.id}">
             <img src="${image_url}" alt="image" class="article-img">
             <div class="article-date">${formattedDate}</div>
             <h2 class="article-title">${article.title}</h2>
@@ -90,6 +107,45 @@ function displayArticles(articles) {
     // Injecter le HTML dans le DOM
     const conteneur = document.querySelector(".main") // Récupérer la classe du conteneur d'article
     conteneur.innerHTML = html;
+}
+
+function showDetail(article){
+    const articleOverview = document.querySelector(".detail");
+
+    // Gérer le cas où l'url de l'image n'est pas disponible
+    const image_url = article.image_url || "https://placehold.co/800x400";
+
+    // Formater la date avec gestion des erreurs
+    let formattedDate = "Date inconnue";
+    if (article.date) {
+        const dateObj = new Date(article.date);
+        if (!isNaN(dateObj.getTime())) {
+            formattedDate = dateObj.toLocaleString('fr-FR', {
+                day: 'numeric',
+                month: 'long',
+                year: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+        }
+    }
+
+    const articleOverviewData = `
+    <button type="button" id="backBtn">Retour</button>
+    <h1 class="article-title-detail">${article.title}</h1>
+    <img src="${image_url}" alt="image" class="article-img-detail">
+    <div class="article-date-detail">${formattedDate}</div>
+    <h2 class="article-summary">Summary</h2>
+    <p>
+        ${article.summary || "Résumé non disponible."}
+    </p>
+    <h2 class="article-content">Full Content</h2>
+    <p>
+        ${article.content || "Contenu complet non disponible."}
+    </p>
+    `
+    articleOverview.innerHTML = articleOverviewData
+    articleOverview.classList.add("visible")
 }
 
 // Fetch la liste des articles
@@ -120,11 +176,43 @@ button.addEventListener('click', async () => {
         displayArticles(updatedArticles);
     }
     catch (error) {
-        console.error("Erreur: ", error)
-        alert("Le scraping a échoué !")
+        console.error("Erreur: ", error);
+        alert("Le scraping a échoué !");
     }
     finally {
-        button.disabled = false
-        button.textContent = "Rafraichir"
+        // Vérifier le statut avant de réactiver : si le scraping tourne encore,
+        // on laisse le bouton désactivé (le polling s'en chargera)
+        const status = await checkScrapStatus();
+        if (status !== "running") {
+            button.disabled = false;
+            button.textContent = "Rafraichir";
+        }
+    }
+})
+
+// Affiche la vue détaillée d'un article
+const main = document.querySelector(".main");
+main.addEventListener('click', async (event) => {
+    const card = event.target.closest('.article');
+    if (!card) return;
+    button.disabled = true;
+    const articleId = card.dataset.id;
+    const article = await loadArticle(articleId);
+    main.classList.add("hidden")
+    showDetail(article);
+})
+
+// Cache la vue détaillée d'un article
+const detail = document.querySelector(".detail");
+detail.addEventListener('click', async (event) => {
+    const backButton = event.target.closest('#backBtn');
+    if (!backButton) return;
+    detail.classList.remove("visible")
+    main.classList.remove("hidden")
+    // Vérifier le statut avant de réactiver le bouton
+    const status = await checkScrapStatus();
+    if (status !== "running") {
+        button.disabled = false;
+        button.textContent = "Rafraichir";
     }
 })

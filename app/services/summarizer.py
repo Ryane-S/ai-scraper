@@ -17,7 +17,8 @@ def summarize_article(article_content:str) -> str:
         min_length=30,
         do_sample=False,
         num_beams=4,
-        early_stopping=True
+        early_stopping=True,
+        forced_bos_token_id=None
     )
 
     # Décoder le résultat
