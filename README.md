@@ -18,7 +18,7 @@
 | **Python Package Manager** | [`uv`](https://docs.astral.sh/uv/)     |
 | **Backend**     | FastAPI, Uvicorn                                                               |
 | **Base de données** | PostgreSQL 16.13                                              |
-| **Scraping**    | Requests, BeautifulSoup4                                                       |
+| **Scraping**    | Requests, BeautifulSoup4, Trafilatura                                                       |
 | **IA / NLP**    | HuggingFace Transformers (PyTorch)                                             |
 | **Tâches planifiées** | APScheduler                                                           |
 | **Frontend**    | HTML, CSS vanilla, JavaScript (Fetch API)                                     |
