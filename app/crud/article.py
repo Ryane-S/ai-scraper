@@ -22,7 +22,7 @@ def get_article_by_id(db:Session, article_id:int) -> Article | None:
     """Méthode de lecture d'un article en particulier."""
     return db.query(Article).filter(Article.id == article_id).first()
 
-def get_all_articles(db:Session, skip:int = 0, limit:int = 20) -> list[Article]:
+def get_all_articles(db:Session, skip:int = 0, limit:int = 50) -> list[Article]:
     """Méthode de lecture des 20 articles les plus récents en BDD."""
     return db.query(Article).order_by(Article.date.desc()).offset(skip).limit(limit).all()
 

@@ -39,6 +39,11 @@ body, html {
     height: auto;
 }
 
+.article-source{
+    font-weight: bold;
+    text-decoration: underline;
+}
+
 .article-img-detail{
     display: block;
     margin: 0 auto;

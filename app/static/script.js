@@ -95,6 +95,7 @@ function displayArticles(articles) {
         <article class="article" data-id="${article.id}">
             <img src="${image_url}" alt="image" class="article-img">
             <div class="article-date">${formattedDate}</div>
+            <div class="article-source">${article.source}</div>
             <h2 class="article-title">${article.title}</h2>
             <p>
                 ${article.description || "Pas de description disponible."}
@@ -109,6 +110,7 @@ function displayArticles(articles) {
     conteneur.innerHTML = html;
 }
 
+// Fonction qui affiche le contenu de l'article et son résumé
 function showDetail(article){
     const articleOverview = document.querySelector(".detail");
 
@@ -130,21 +132,33 @@ function showDetail(article){
         }
     }
 
-    const articleOverviewData = `
-    <button type="button" id="backBtn">Retour</button>
-    <h3><a href="${article.url}">Click here to read the article</a></h3>
-    <h1 class="article-title-detail">${article.title}</h1>
-    <img src="${image_url}" alt="image" class="article-img-detail">
-    <div class="article-date-detail">${formattedDate}</div>
-    <h2 class="article-summary">Summary</h2>
-    <p>
-        ${article.summary || "Résumé non disponible."}
-    </p>
-    <h2 class="article-content">Full Content</h2>
-    <p>
-        ${article.content || "Contenu complet non disponible."}
-    </p>
-    `
+    let articleOverviewData;
+
+    if (!article.content) {
+        articleOverviewData = `
+        <button type="button" id="backBtn">Retour</button>
+        <h1>Article indisponible :(</h1>
+        <h2>Veuillez réessayer plus tard.</h2>
+        `
+    }
+    else {
+        articleOverviewData = `
+        <button type="button" id="backBtn">Retour</button>
+        <h3><a href="${article.url}">Click here to read the article</a></h3>
+        <h1 class="article-title-detail">${article.title}</h1>
+        <img src="${image_url}" alt="image" class="article-img-detail">
+        <div class="article-date-detail">${formattedDate}</div>
+        <h2 class="article-summary">Summary</h2>
+        <p>
+            ${article.summary || "Résumé non disponible."}
+        </p>
+        <h2 class="article-content">Full Content</h2>
+        <p>
+            ${article.content || "Contenu complet non disponible."}
+        </p>
+        `
+    }
+
     articleOverview.innerHTML = articleOverviewData
     articleOverview.classList.add("visible")
 }
@@ -196,9 +210,9 @@ const main = document.querySelector(".main");
 main.addEventListener('click', async (event) => {
     const card = event.target.closest('.article');
     if (!card) return;
-    button.disabled = true;
     const articleId = card.dataset.id;
     const article = await loadArticle(articleId);
+    button.disabled = true;
     main.classList.add("hidden")
     showDetail(article);
 })
