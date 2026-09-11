@@ -13,6 +13,7 @@ class Article(Base):
     title = Column(String(255), index=True, nullable=False) # Titre de l'article
     url = Column(String(512), index=True, unique=True, nullable=True) # URL unique
     description = Column(Text, nullable=True) # Description de l'article
+    source = Column(String(100), nullable=True, index=True) # Source de l'article
     date = Column(DateTime(timezone=True), nullable=True) # Date de parution de l'article
     image_url = Column(String(512), nullable=True) # URL de l'image d'illustration de l'article.
     content = Column(Text, nullable=True) # Contenu de l'article (HTML/md brut)

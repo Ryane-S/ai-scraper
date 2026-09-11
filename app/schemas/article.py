@@ -8,8 +8,10 @@ class ArticleBase(BaseModel):
     title: str = Field(..., min_length=1, max_length=255, description="Titre de l'article")
     url: str = Field(..., min_length=10, max_length=512, description="Url de l'article")
     description: str|None = Field(default=None, min_length=1, description="Description de l'article")
+    source: str|None = Field(default=None, max_length=100, description="Source de l'article")
     content: str|None = Field(default=None, min_length=1, description="Contenu de l'article")
     summary: str|None = Field(default=None, min_length=1, description="Résumé de l'article")
+    category: str | None = Field(default=None, max_length=100, description="Catégorie de l'article")
     date: datetime|None = Field(default=None, description="Date de l'article")
     image_url: str|None = Field(default=None, min_length=10, max_length=512, description="URL de l'image d'illustration de l'article")
 
