@@ -132,6 +132,7 @@ function showDetail(article){
 
     const articleOverviewData = `
     <button type="button" id="backBtn">Retour</button>
+    <h3><a href="${article.url}">Click here to read the article</a></h3>
     <h1 class="article-title-detail">${article.title}</h1>
     <img src="${image_url}" alt="image" class="article-img-detail">
     <div class="article-date-detail">${formattedDate}</div>
