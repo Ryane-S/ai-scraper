@@ -146,8 +146,8 @@ function showDetail(article){
         <button type="button" id="backBtn">Retour</button>
         <h3><a href="${article.url}">Click here to read the article</a></h3>
         <h1 class="article-title-detail">${article.title}</h1>
-        <img src="${image_url}" alt="image" class="article-img-detail">
         <div class="article-date-detail">${formattedDate}</div>
+        <img src="${image_url}" alt="image" class="article-img-detail">
         <h2 class="article-summary">Summary</h2>
         <p>
             ${article.summary || "Résumé non disponible."}

@@ -6,6 +6,7 @@ from dateutil import parser
 from app.core.database import SessionLocal
 from app.crud.article import article_in_db, create_article
 from app.schemas.article import ArticleCreate
+from app.services.categorizer import categorize_article
 from app.services.summarizer import summarize_article
 from app.services.utils import extract_full_article
 
@@ -57,6 +58,8 @@ def fetch_and_store_articles() -> None:
                         image_url = article["image"]
                         # On génère un résumé de l'article
                         article_summary = summarize_article(article_content=article_content) if article["error"] is None else None
+                        # On catégorise l'article
+                        article_category = categorize_article(title=title, summary=article_summary, description=description)
                         # On enregistre l'article dans la BDD
                         article_data = ArticleCreate(
                             title = title,
@@ -66,6 +69,7 @@ def fetch_and_store_articles() -> None:
                             image_url= image_url,
                             content = article_content,
                             summary = article_summary,
+                            category=article_category,
                             date = pubDate
                         )
                         create_article(db, article_data)
