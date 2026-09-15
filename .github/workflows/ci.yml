@@ -31,7 +31,7 @@ jobs:
         run: uv run mypy .
 
   frontend:
-    name: Frontend (JS/CSS)
+    name: Frontend (JS/CSS/HTML)
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -50,3 +50,6 @@ jobs:
 
       - name: Run Stylelint
         run: npm run lint:css
+
+      - name: Run Htmlhint
+        run : npm run lint:html
