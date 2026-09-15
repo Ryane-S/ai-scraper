@@ -137,14 +137,14 @@ function showDetail(article){
 
     if (!article.content) {
         articleOverviewData = `
-        <button type="button" id="backBtn">Retour</button>
+        <button type="button" id="back-btn">Retour</button>
         <h1>Article indisponible :(</h1>
         <h2>Veuillez réessayer plus tard.</h2>
         `
     }
     else {
         articleOverviewData = `
-        <button type="button" id="backBtn">Retour</button>
+        <button type="button" id="back-btn">Retour</button>
         <h3><a href="${article.url}">Click here to read the article</a></h3>
         <h1 class="article-title-detail">${article.title}</h1>
         <div class="article-date-detail">${formattedDate}</div>
@@ -165,7 +165,7 @@ function showDetail(article){
 }
 
 // Fetch la liste des articles
-const articles = loadArticles()
+loadArticles()
     .then(articles => {
         displayArticles(articles);
     })
@@ -221,7 +221,7 @@ main.addEventListener('click', async (event) => {
 // Cache la vue détaillée d'un article
 const detail = document.querySelector(".detail");
 detail.addEventListener('click', async (event) => {
-    const backButton = event.target.closest('#backBtn');
+    const backButton = event.target.closest('#back-btn');
     if (!backButton) return;
     detail.classList.remove("visible")
     main.classList.remove("hidden")

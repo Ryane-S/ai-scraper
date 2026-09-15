@@ -4,18 +4,18 @@
 
 body, html {
     font-size: 16px;
-    color: rgba(0,0,0,.87);
+    color: rgb(0 0 0 / 87%);
     font-family: sans-serif;
     line-height: 1.6;
     margin: 0;
     font-weight: 500;
-    background: oklab(95.602% 0.02079 0.00646);
+    background: oklab(95.602% 0.0208 0.0065);
 }
 
 .main-title{
     text-align: center;
     font-size:  50px;
-    color: hsl(0, 100%, 50%);
+    color: hsl(0deg 100% 50%);
 }
 
 .scraping-button{
@@ -68,7 +68,7 @@ body, html {
     color: red;
 }
 
-#backBtn{
+#back-btn{
     margin: 30px;
 }
 
