@@ -1,4 +1,5 @@
 from functools import lru_cache
+
 from sentence_transformers import SentenceTransformer, util
 
 CATEGORIES = {
@@ -47,11 +48,12 @@ def _embed_categories():
     embeddings = model.encode(list(CATEGORIES.values()))
     return embeddings
 
-def categorize_article(title:str, summary:str|None, description:str|None) -> str:
+def categorize_article(title:str, summary:str|None, description:str|None) -> str|None:
     data = title + " " + (summary or description or "")
     model = _get_model()
     data_embedding = model.encode(data)
     categories = _embed_categories()
     similarity_matrix = util.cos_sim(data_embedding, categories)
-    best_category = list(CATEGORIES.keys())[similarity_matrix.argmax().item()]
-    return best_category
+    best_score = similarity_matrix.max().item()
+    best_category = list(CATEGORIES.keys())[int(similarity_matrix.argmax().item())]
+    return best_category if best_score >= 0.2 else None

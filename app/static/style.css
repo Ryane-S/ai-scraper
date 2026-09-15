@@ -44,6 +44,10 @@ body, html {
     text-decoration: underline;
 }
 
+.article-category{
+    font-style: italic;
+}
+
 .article-img-detail{
     display: block;
     margin: 0 auto;

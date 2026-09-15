@@ -96,6 +96,7 @@ function displayArticles(articles) {
             <img src="${image_url}" alt="image" class="article-img">
             <div class="article-date">${formattedDate}</div>
             <div class="article-source">${article.source}</div>
+            <div class="article-category">${article.category}</div>
             <h2 class="article-title">${article.title}</h2>
             <p>
                 ${article.description || "Pas de description disponible."}

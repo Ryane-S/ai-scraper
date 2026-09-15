@@ -14,11 +14,11 @@ from app.services.utils import extract_full_article
 def fetch_and_store_articles() -> None:
     """Fetch les nouveaux articles, les traite et les stocke en BDD."""
     URLS = [
-        {"name": "TechCrunch", "url":"https://techcrunch.com/category/artificial-intelligence/feed/"},
-        {"name": "HackerNews", "url":"https://hnrss.org/newest?points=100"},
-        {"name": "Science Daily", "url":"https://www.sciencedaily.com/rss/all.xml"},
-        {"name": "FranceInfo", "url":"https://www.franceinfo.fr//politique.rss"},
-        {"name": "The Guardian", "url":"https://www.theguardian.com/world/rss"}
+        {"name": "TechCrunch", "url":"https://techcrunch.com/category/artificial-intelligence/feed/", "category": "IA"},
+        {"name": "HackerNews", "url":"https://hnrss.org/newest?points=100", "category": "Tech"},
+        {"name": "Science Daily", "url":"https://www.sciencedaily.com/rss/all.xml", "category": "Science"},
+        {"name": "FranceInfo", "url":"https://www.franceinfo.fr//politique.rss", "category": "Politics"},
+        {"name": "The Guardian", "url":"https://www.theguardian.com/world/rss", "category": "GeoPolitics"}
     ]
     headers = {
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/127.0.0.0 Safari/537.36'
@@ -60,6 +60,8 @@ def fetch_and_store_articles() -> None:
                         article_summary = summarize_article(article_content=article_content) if article["error"] is None else None
                         # On catégorise l'article
                         article_category = categorize_article(title=title, summary=article_summary, description=description)
+                        if article_category is None:
+                             article_category = URL["category"]
                         # On enregistre l'article dans la BDD
                         article_data = ArticleCreate(
                             title = title,
