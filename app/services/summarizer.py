@@ -13,8 +13,8 @@ def summarize_article(article_content:str) -> str:
     # Générer le résumé
     summary_ids = model.generate( # type: ignore[misc]
         inputs.input_ids,
-        max_length=120,
-        min_length=30,
+        max_length=150,
+        min_length=40,
         do_sample=False,
         num_beams=4,
         early_stopping=True,
