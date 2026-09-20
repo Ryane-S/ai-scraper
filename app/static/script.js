@@ -171,7 +171,7 @@ function showDetail(article){
 
 // Génère les boutons de catégories à partir des articles chargés
 function displayCategoryButtons() {
-    const otherBtns = document.querySelector(".otherBtns");
+    const otherBtns = document.querySelector(".other-btns");
 
     // Récupérer les catégories uniques (Set = pas de doublons)
     const uniqueCategories = [...new Set(
@@ -195,7 +195,7 @@ async function init() {
         allArticles = await loadArticles();
         displayArticles();
         displayCategoryButtons();
-        document.getElementById("allBtn").classList.add("active");
+        document.getElementById("all-btn").classList.add("active");
     } catch (error) {
         console.error(error);
     }
@@ -205,7 +205,7 @@ init();
 // Filtre les articles par catégorie
 const categoryButtons = document.querySelector(".category-buttons");
 categoryButtons.addEventListener('click', (event) => {
-    const btn = event.target.closest('.category-btn, #allBtn');
+    const btn = event.target.closest('.category-btn, #all-btn');
     if (!btn) return;
 
     currentCategory = btn.dataset.category;
@@ -215,14 +215,14 @@ categoryButtons.addEventListener('click', (event) => {
 
 // Met à jour la classe .active sur le bon bouton
 function updateActiveButton(activeBtn) {
-    document.querySelectorAll('.category-btn, #allBtn').forEach(btn => {
+    document.querySelectorAll('.category-btn, #all-btn').forEach(btn => {
         btn.classList.remove('active');
     });
     activeBtn.classList.add('active');
 }
 
 // Rafraichit la liste des articles
-const button = document.getElementById("refreshBtn");
+const button = document.getElementById("refresh-btn");
 button.addEventListener('click', async () => {
     // Désactiver le bouton
     button.disabled = true
