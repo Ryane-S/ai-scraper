@@ -14,6 +14,7 @@ dependencies = [
     "psycopg2-binary>=2.9.12",
     "pydantic>=2.13.4",
     "pydantic-settings>=2.14.2",
+    "pytest>=9.1.1",
     "python-dateutil>=2.9.0.post0",
     "python-dotenv>=1.2.2",
     "requests>=2.34.2",
@@ -39,3 +40,19 @@ ignore = ["BLE001", "B008", "DTZ005"]
 
 [tool.mypy]
 ignore_missing_imports = true
+
+# Nouvelle section pour la configuration des outils
+[tool.setuptools]
+packages = ["app"]  # Spécifie où trouver les packages
+
+# Configuration de pytest
+[tool.pytest.ini_options]
+testpaths = ["tests"] # Chemins où chercher les tests
+pythonpath = ["."] # Ajoute app au PYTHONPATH pour les imports
+
+# Options par défaut pour pytest
+addopts = [
+    "-v",              # Mode verbeux
+    "--tb=short",      # Traceback court
+    "--strict-markers", # Exige la déclaration des markers
+]
