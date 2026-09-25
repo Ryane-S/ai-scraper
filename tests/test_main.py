@@ -1,9 +1,7 @@
-from fastapi.testclient import TestClient
 from starlette import status
 
-from app.main import app
+from tests.conftest import client
 
-client = TestClient(app)
 
 def test_health():
     response = client.get("/health")
