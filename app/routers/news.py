@@ -34,9 +34,12 @@ def get_article(article_id:int, db:Session = Depends(get_db)):
     return article
 
 @router.get("/articles", response_model=list[ArticleResponse])
-def get_news(db:Session = Depends(get_db)):
+def get_news(skip:int = 0,
+             limit:int = 20,
+             db:Session = Depends(get_db)
+):
     """Route pour obtenir la liste de tous les articles."""
-    return get_all_articles(db)
+    return get_all_articles(db, skip=skip, limit=limit)
 
 @router.post("/scrape")
 def trigger_scrape(bg_tasks: BackgroundTasks):

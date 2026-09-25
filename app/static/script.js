@@ -2,10 +2,11 @@ console.log("Script chargé !")
 
 let allArticles = []
 let currentCategory = "all"
+let currentDisplayedArticles = 0
 
 // Méthode qui fetch la liste des articles
-async function loadArticles(){
-    const response = await fetch("/news/articles", {
+async function loadArticles(skip=0, limit=20){
+    const response = await fetch(`/news/articles?skip=${skip}&limit=${limit}`, {
         method: 'GET',
         headers: {
             "Accept": "application/json",
@@ -202,6 +203,15 @@ async function init() {
 }
 init();
 
+// Charge plus d'articles
+const loadMoreBtn = document.getElementById("load-more-btn")
+loadMoreBtn.addEventListener('click', async () => {
+    const newArticles = await loadArticles(currentDisplayedArticles, 20)
+    currentDisplayedArticles += 20
+    allArticles.push(...newArticles)
+    displayArticles()
+})
+
 // Filtre les articles par catégorie
 const categoryButtons = document.querySelector(".category-buttons");
 categoryButtons.addEventListener('click', (event) => {
@@ -211,6 +221,7 @@ categoryButtons.addEventListener('click', (event) => {
     currentCategory = btn.dataset.category;
     displayArticles();
     updateActiveButton(btn);
+    loadMoreBtn.classList.add('hidden')
 });
 
 // Met à jour la classe .active sur le bon bouton
@@ -262,6 +273,7 @@ main.addEventListener('click', async (event) => {
     const articleId = card.dataset.id;
     const article = await loadArticle(articleId);
     button.disabled = true;
+    loadMoreBtn.classList.add("hidden")
     main.classList.add("hidden")
     showDetail(article);
 })
@@ -272,6 +284,7 @@ detail.addEventListener('click', async (event) => {
     const backButton = event.target.closest('#back-btn');
     if (!backButton) return;
     detail.classList.remove("visible")
+    loadMoreBtn.classList.remove("hidden")
     main.classList.remove("hidden")
     // Vérifier le statut avant de réactiver le bouton
     const status = await checkScrapStatus();

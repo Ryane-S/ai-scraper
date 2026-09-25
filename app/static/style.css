@@ -289,6 +289,22 @@ body, html {
     border-left: 4px solid #667eea;
 }
 
+.load-more {
+    text-align: center;
+    margin: 20px 0 30px;
+}
+
+#load-more-btn {
+    padding: 14px 32px;
+    font-size: 1rem;
+    font-weight: 600;
+    font-family: inherit;
+    color: white;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgb(102 126 234 / 35%);
+}
+
 .footer {
     text-align: center;
     padding: 40px 20px;
