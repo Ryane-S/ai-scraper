@@ -1,7 +1,7 @@
 [project]
 name = "ai-scraper"
 version = "0.1.0"
-description = "Add your description here"
+description = "Un veilleur d'actualité automatisé qui scrape les dernières news, les résume avec un modèle de NLP, et les expose via une API REST accompagnée d'un tableau de bord léger."
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [

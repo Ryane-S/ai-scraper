@@ -2,7 +2,7 @@ console.log("Script chargé !")
 
 let allArticles = []
 let currentCategory = "all"
-let currentDisplayedArticles = 0
+let currentDisplayedArticles = 20
 
 // Méthode qui fetch la liste des articles
 async function loadArticles(skip=0, limit=20){
@@ -207,9 +207,12 @@ init();
 const loadMoreBtn = document.getElementById("load-more-btn")
 loadMoreBtn.addEventListener('click', async () => {
     const newArticles = await loadArticles(currentDisplayedArticles, 20)
-    currentDisplayedArticles += 20
+    currentDisplayedArticles += Object.entries(newArticles).length
     allArticles.push(...newArticles)
     displayArticles()
+    if (currentDisplayedArticles == 50) {
+        loadMoreBtn.classList.add("hidden")
+    }
 })
 
 // Filtre les articles par catégorie
@@ -272,6 +275,7 @@ main.addEventListener('click', async (event) => {
     if (!card) return;
     const articleId = card.dataset.id;
     const article = await loadArticle(articleId);
+    window.scrollTo({top:0, behavior:'smooth'})
     button.disabled = true;
     loadMoreBtn.classList.add("hidden")
     main.classList.add("hidden")
@@ -284,7 +288,9 @@ detail.addEventListener('click', async (event) => {
     const backButton = event.target.closest('#back-btn');
     if (!backButton) return;
     detail.classList.remove("visible")
-    loadMoreBtn.classList.remove("hidden")
+    if (currentDisplayedArticles != 50) {
+        loadMoreBtn.classList.remove("hidden")
+    }
     main.classList.remove("hidden")
     // Vérifier le statut avant de réactiver le bouton
     const status = await checkScrapStatus();

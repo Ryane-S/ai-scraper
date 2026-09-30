@@ -1,10 +1,10 @@
 # 📰 AI News Scraper & Summarizer
 
-> Un veilleur d'actualité automatisé qui scrape les dernières news sur l'Intelligence Artificielle, les résume avec un modèle de NLP, et les expose via une API REST accompagnée d'un tableau de bord léger.
+> Un veilleur d'actualité automatisé qui scrape les dernières news, les résume avec un modèle de NLP, et les expose via une API REST accompagnée d'un tableau de bord léger.
 
 ## Fonctionnalités principales
 
-- **Scraping intelligent** : Récupère les titres et contenus depuis des sources d'actu tech (via `Requests` & `BeautifulSoup`).
+- **Scraping intelligent** : Récupère les titres et contenus depuis des sources d'actualités sur des thèmes variés (via `Requests` & `BeautifulSoup`).
 - **Résumé automatique** : Utilise un modèle Transformer (`facebook/bart-large-cnn`) pour synthétiser les articles en quelques phrases.
 - **Persistance des données** : Stocke les articles dans une base Postgres.
 - **API RESTful** : Construite avec FastAPI, elle expose les articles en JSON avec une documentation interactive générée automatiquement (`/docs`).
