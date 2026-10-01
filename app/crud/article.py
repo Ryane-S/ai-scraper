@@ -1,4 +1,4 @@
-
+from datetime import datetime
 from sqlalchemy.orm import Session
 
 from app.models.article import Article
@@ -22,7 +22,7 @@ def get_article_by_id(db:Session, article_id:int) -> Article | None:
     """Méthode de lecture d'un article en particulier."""
     return db.query(Article).filter(Article.id == article_id).first()
 
-def get_all_articles(db:Session, skip:int = 0, limit:int = 20) -> list[Article]:
+def get_all_articles(db:Session, skip:int = 0, limit:int = 20) -> list[Article] | list[None]:
     """Méthode de lecture des 20 articles les plus récents en BDD."""
     return db.query(Article).order_by(Article.date.desc()).offset(skip).limit(limit).all()
 
@@ -34,6 +34,12 @@ def delete_article(db:Session, article_id:int) -> bool:
     db.delete(article)
     db.commit()
     return True
+
+def delete_old_articles(db:Session, date:datetime) -> int:
+    """Méthode pour supprimer les articles antérieurs à une certaine date."""
+    deleted_count = db.query(Article).filter(Article.date < date).delete()
+    db.commit()
+    return deleted_count
 
 def delete_all_articles(db:Session) -> int:
     """Méthode pour supprimer tous les articles de la BDD."""
