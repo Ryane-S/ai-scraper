@@ -30,7 +30,7 @@ def get_article(article_id:int, db:Session = Depends(get_db)):
     """Route pour obtenir un article en particulier avec son id."""
     article = get_article_by_id(db, article_id)
     if article is None:
-        raise HTTPException(status_code=404, detail="Article non trouvé")
+        raise HTTPException(status_code=404, detail="Article non trouvé.")
     return article
 
 @router.get("/articles", response_model=list[ArticleResponse])
@@ -45,7 +45,7 @@ def get_news(skip:int = 0,
 def trigger_scrape(bg_tasks: BackgroundTasks):
     """Route pour déclencher le scraper en background."""
     if actual_state["status"] == "running":
-        raise HTTPException(status_code=400, detail="Scraping déjà en cours")
+        raise HTTPException(status_code=400, detail="Scraping déjà en cours.")
     actual_state["status"] = "running"
     actual_state["last_scraping"] = datetime.now().isoformat()
     bg_tasks.add_task(run_scraper_with_status)

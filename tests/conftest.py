@@ -32,12 +32,12 @@ def db():
 
 # Fixture : client FastAPI
 @pytest.fixture
-def client():
-    app.dependency_overrides[get_db] = lambda: TestSession()
+def client(db):
+    app.dependency_overrides[get_db] = lambda: db
     yield TestClient(app)
     app.dependency_overrides.clear()
 
-# Ficture : article
+# Fixture : article
 @pytest.fixture
 def article_data():
     unique = uuid.uuid4().hex[:8]

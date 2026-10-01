@@ -1,10 +1,10 @@
-# 📰 AI News Scraper & Summarizer
+# 📰 News Scraper & Summarizer
 
-> Un veilleur d'actualité automatisé qui scrape les dernières news, les résume avec un modèle de NLP, et les expose via une API REST accompagnée d'un tableau de bord léger.
+> Un veilleur d'actualité automatisé qui scrape les dernières news, les résume avec un modèle NLP, et les expose via une API REST.
 
 ## Fonctionnalités principales
 
-- **Scraping intelligent** : Récupère les titres et contenus depuis des sources d'actualités sur des thèmes variés (via `Requests` & `BeautifulSoup`).
+- **Scraping intelligent** : Récupère les titres et contenus depuis des sources d'actualités sur des thèmes variés (via `Requests`, `Feedparser` & `BeautifulSoup`).
 - **Résumé automatique** : Utilise un modèle Transformer (`facebook/bart-large-cnn`) pour synthétiser les articles en quelques phrases.
 - **Persistance des données** : Stocke les articles dans une base Postgres.
 - **API RESTful** : Construite avec FastAPI, elle expose les articles en JSON avec une documentation interactive générée automatiquement (`/docs`).
@@ -18,7 +18,7 @@
 | **Python Package Manager** | [`uv`](https://docs.astral.sh/uv/)     |
 | **Backend**     | FastAPI, Uvicorn                                                               |
 | **Base de données** | PostgreSQL 16.13                                              |
-| **Scraping**    | Requests, BeautifulSoup4, Trafilatura                                                       |
+| **Scraping**    | Requests, Feedparser, BeautifulSoup4 Trafilatura                                                       |
 | **IA / NLP**    | HuggingFace Transformers (PyTorch)                                             |
 | **Tâches planifiées** | APScheduler                                                           |
 | **Frontend**    | HTML, CSS vanilla, JavaScript (Fetch API)                                     |

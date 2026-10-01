@@ -86,7 +86,7 @@ def test_get_all_articles_sorted_by_date_desc(db):
     assert articles[1].title == "Article 1"
     assert articles[2].title == "Article 2"
 
-# Tests de vérification de la présence d'un article
+# Test de vérification de la présence d'un article
 def test_article_in_db(db, article_data):
     article = create_article(db, article_data)
     assert article_in_db(db, article.url)
