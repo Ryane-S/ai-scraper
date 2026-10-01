@@ -196,7 +196,12 @@ async function init() {
         allArticles = await loadArticles();
         displayArticles();
         displayCategoryButtons();
-        document.getElementById("all-btn").classList.add("active");
+        if (Object.entries(allArticles).length != 0){
+            document.getElementById("all-btn").classList.add("active");
+        }
+        else {
+            document.getElementById("all-btn").classList.add("hidden");
+        }
     } catch (error) {
         console.error(error);
     }
@@ -206,6 +211,7 @@ init();
 // Charge plus d'articles
 const loadMoreBtn = document.getElementById("load-more-btn")
 loadMoreBtn.addEventListener('click', async () => {
+    if (Object.entries(allArticles).length == 0) return;
     const newArticles = await loadArticles(currentDisplayedArticles, 20)
     currentDisplayedArticles += Object.entries(newArticles).length
     allArticles.push(...newArticles)
@@ -224,7 +230,13 @@ categoryButtons.addEventListener('click', (event) => {
     currentCategory = btn.dataset.category;
     displayArticles();
     updateActiveButton(btn);
-    loadMoreBtn.classList.add('hidden')
+    // On ne cache le bouton "Charger plus" que si on n'est PAS sur "Tous"
+    if (currentCategory !== "all") {
+        loadMoreBtn.classList.add('hidden');
+    } else if (currentDisplayedArticles != 50) {
+        // Retour sur "Tous" : on réaffiche le bouton s'il reste des articles à charger
+        loadMoreBtn.classList.remove('hidden');
+    }
 });
 
 // Met à jour la classe .active sur le bon bouton
@@ -249,9 +261,27 @@ button.addEventListener('click', async () => {
         // Lancer la boucle de polling
         await pollStatus();
 
-        // Recharger les articles
+        // Recharger les articles (première page uniquement)
         allArticles = await loadArticles();
+
+        // Reset des variables d'état (compteur de pagination + filtre catégorie)
+        currentDisplayedArticles = 20;
+        currentCategory = "all";
+
+        // Afficher les articles et régénérer les boutons de catégories
         displayArticles();
+        displayCategoryButtons();
+
+        // Remettre le bouton "Tous" comme seul bouton actif (et le rendre visible)
+        const allBtn = document.getElementById("all-btn");
+        document.querySelectorAll('.category-btn, #all-btn').forEach(btn => {
+            btn.classList.remove('active');
+        });
+        allBtn.classList.add("active");
+        allBtn.classList.remove("hidden");
+
+        // Réafficher le bouton "Charger plus" (il avait peut-être été caché)
+        loadMoreBtn.classList.remove("hidden");
     }
     catch (error) {
         console.error("Erreur: ", error);
