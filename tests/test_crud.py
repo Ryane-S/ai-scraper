@@ -1,8 +1,16 @@
-from tests.conftest import db
 import uuid
 from datetime import datetime, timedelta
-from app.crud.article import create_article, article_in_db, get_article_by_id, get_all_articles, delete_old_articles, delete_all_articles
+
+from app.crud.article import (
+    article_in_db,
+    create_article,
+    delete_all_articles,
+    delete_old_articles,
+    get_all_articles,
+    get_article_by_id,
+)
 from app.schemas.article import ArticleCreate
+
 
 # Tests de création d'un article
 def test_create_article_persists_in_db(db, article_data):

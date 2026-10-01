@@ -1,7 +1,5 @@
 from starlette import status
 
-from tests.conftest import client
-
 
 def test_health(client):
     response = client.get("/health")
