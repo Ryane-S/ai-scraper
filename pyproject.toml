@@ -5,6 +5,7 @@ description = "Un veilleur d'actualité automatisé qui scrape les dernières ne
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
+    "apscheduler>=3.11.3",
     "asyncpg>=0.31.0",
     "bs4>=0.0.2",
     "fastapi>=0.141.1",

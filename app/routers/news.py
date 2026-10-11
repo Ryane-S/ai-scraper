@@ -3,8 +3,8 @@ from datetime import datetime
 from fastapi import APIRouter, BackgroundTasks, Depends, HTTPException
 from sqlalchemy.orm import Session
 
-from app.core.security import verify_api_key
 from app.core.database import get_db
+from app.core.security import verify_api_key
 from app.crud.article import *
 from app.schemas.article import ArticleResponse
 from app.services.scraper import fetch_and_store_articles

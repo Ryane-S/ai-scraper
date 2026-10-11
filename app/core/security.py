@@ -1,6 +1,9 @@
-from fastapi import Header, HTTPException, status
-from app.core.config import settings
 import hmac
+
+from fastapi import Header, HTTPException, status
+
+from app.core.config import settings
+
 
 def verify_api_key(x_api_key: str | None = Header(None)) -> bool:
     if x_api_key is None:
