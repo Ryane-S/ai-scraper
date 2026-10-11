@@ -1,12 +1,20 @@
+from functools import lru_cache
+
 from transformers import BartForConditionalGeneration, BartTokenizer
 
-# Charger le tokenizer et le modèle (spécifiquement pour la génération conditionnelle)
-model_name = "facebook/bart-large-cnn"
-tokenizer = BartTokenizer.from_pretrained(model_name)
-model = BartForConditionalGeneration.from_pretrained(model_name)
+@lru_cache
+def _get_model():
+    # Charger le tokenizer et le modèle (spécifiquement pour la génération conditionnelle)
+    model_name = "facebook/bart-large-cnn"
+    tokenizer = BartTokenizer.from_pretrained(model_name)
+    model = BartForConditionalGeneration.from_pretrained(model_name)
+    return tokenizer, model
 
 def summarize_article(article_content:str) -> str:
     """Résume le contenu de l'article."""
+    # On récupère le modèle et le tokenizer
+    tokenizer, model = _get_model()
+
     # Tokenizer l'article
     inputs = tokenizer(article_content, return_tensors="pt", truncation=True, max_length=1024)
 
