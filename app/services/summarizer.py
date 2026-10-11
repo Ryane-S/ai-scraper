@@ -2,6 +2,7 @@ from functools import lru_cache
 
 from transformers import BartForConditionalGeneration, BartTokenizer
 
+
 @lru_cache
 def _get_model():
     # Charger le tokenizer et le modèle (spécifiquement pour la génération conditionnelle)

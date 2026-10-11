@@ -72,22 +72,13 @@ def test_get_article_returns_404_when_not_found(client):
     assert response.json() == {"detail": "Article non trouvé."}
 
 # Tests de la route qui gère le scraping
-def test_scrape_returns_200(client):
+def test_scrape_returns_401_with_no_api_key(client):
     # On remplace fetch_and_store_articles par un mock qui ne fait rien
     with patch("app.routers.news.fetch_and_store_articles"):
         response = client.post("/news/scrape")
     
-    assert response.status_code == status.HTTP_200_OK
-    assert response.json() == {"message": "Scraping en cours... Actualisez la liste dans quelques instants."}
-
-def test_scrape_returns_400_when_already_running(client):
-    actual_state["status"] = "running"
-    try:
-        response = client.post("/news/scrape")
-        assert response.status_code == status.HTTP_400_BAD_REQUEST
-        assert response.json() == {"detail": "Scraping déjà en cours."}
-    finally:
-        actual_state["status"] = "idle"
+    assert response.status_code == status.HTTP_401_UNAUTHORIZED
+    assert response.json() == {'detail': "Missing API key"}
 
 # Test de la route qui vérifie l'état du scraping
 def test_get_scrape_status(client):

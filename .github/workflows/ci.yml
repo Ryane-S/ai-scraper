@@ -59,6 +59,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       DATABASE_URL: "sqlite:///:memory:"
+      SCRAPE_API_KEY: "test-api-key"
     steps:
       - uses: actions/checkout@v4
 

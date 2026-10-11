@@ -1,12 +1,13 @@
 import logging
 from datetime import datetime, timedelta
+
 from apscheduler.schedulers.background import BackgroundScheduler
 from apscheduler.triggers.cron import CronTrigger
 
 from app.core.config import settings
 from app.core.database import SessionLocal
-from app.services.scraper import fetch_and_store_articles
 from app.crud.article import delete_old_articles
+from app.services.scraper import fetch_and_store_articles
 
 # On instancie un logger
 logger = logging.getLogger(__name__)
@@ -18,7 +19,7 @@ def _run_scraping() -> None:
     logger.info("Job scraping démarré.")
     try:
         fetch_and_store_articles()
-    except Exception as e:
+    except Exception:
         logger.exception("Erreur lors du scraping.")
     finally:
         logger.info("Scraping terminé !")
@@ -32,7 +33,7 @@ def _run_cleanup() -> None:
         # Suppression
         deleted_articles = delete_old_articles(db, date=threshold)
         logger.info(f"Nombre d'articles supprimés: {deleted_articles}")
-    except Exception as e:
+    except Exception:
         logger.exception("Erreur lors du nettoyage.")
     finally:
         db.close()

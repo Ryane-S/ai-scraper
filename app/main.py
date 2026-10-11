@@ -1,13 +1,14 @@
-from contextlib import asynccontextmanager
 import logging
+from contextlib import asynccontextmanager
+
 from fastapi import FastAPI
 from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
 
 from app.core.config import settings
 from app.core.database import Base, engine
-from app.services.scheduler import start_scheduler, shutdown_scheduler
 from app.routers import health, news
+from app.services.scheduler import shutdown_scheduler, start_scheduler
 
 logging.basicConfig(
     level=logging.INFO,
