@@ -34,43 +34,6 @@ async function loadArticle(id){
     throw new Error("Impossible de contacter le serveur")
 }
 
-// Méthode qui lance le scraper pour rafraichissement
-async function scrapArticles(){
-    const response = await fetch("/news/scrape", {
-        method: 'POST',
-        headers: {
-            "Accept": "application/json",
-        }
-    })
-    if (response.ok == true){
-        return true
-    }
-    throw new Error("Impossible de contacter le serveur")
-}
-
-// Méthode qui vérifie le statut du scraping
-async function checkScrapStatus() {
-    const response = await fetch("/news/scrape/status");
-    const data = await response.json();
-    return data.status; // "idle", "running", ou "error"
-}
-
-function pollStatus() {
-    return new Promise((resolve, reject) => {
-        const interval = setInterval(async () => {
-            const status = await checkScrapStatus();
-            if (status === "idle") {
-                clearInterval(interval);
-                resolve();
-            } else if (status === "error") {
-                clearInterval(interval);
-                reject(new Error("Le scraping a échoué"));
-            }
-            // Si "running", on continue
-        }, 1000);
-    });
-}
-
 // Fonction qui affiche les articles dans le DOM
 function displayArticles() {
     // Construire le HTML à injecter dans le DOM
@@ -232,7 +195,7 @@ categoryButtons.addEventListener('click', (event) => {
     updateActiveButton(btn);
     // On ne cache le bouton "Charger plus" que si on n'est PAS sur "Tous"
     if (currentCategory !== "all") {
-        loadMoreBtn.classList.add('hidden');
+        loadMoreBtn.classList.add("hidden");
     } else if (currentDisplayedArticles != 50) {
         // Retour sur "Tous" : on réaffiche le bouton s'il reste des articles à charger
         loadMoreBtn.classList.remove('hidden');
@@ -247,20 +210,13 @@ function updateActiveButton(activeBtn) {
     activeBtn.classList.add('active');
 }
 
-// Rafraichit la liste des articles
+// Recharge simplement la liste des articles depuis la BDD
 const button = document.getElementById("refresh-btn");
 button.addEventListener('click', async () => {
-    // Désactiver le bouton
-    button.disabled = true
-    button.textContent = "Scraping en cours ..."
+    // Feedback visuel
+    button.disabled = true;
 
     try {
-        // Lancer le scraping
-        await scrapArticles();
-
-        // Lancer la boucle de polling
-        await pollStatus();
-
         // Recharger les articles (première page uniquement)
         allArticles = await loadArticles();
 
@@ -285,16 +241,11 @@ button.addEventListener('click', async () => {
     }
     catch (error) {
         console.error("Erreur: ", error);
-        alert("Le scraping a échoué !");
+        alert("Impossible de recharger la liste.");
     }
     finally {
-        // Vérifier le statut avant de réactiver : si le scraping tourne encore,
-        // on laisse le bouton désactivé (le polling s'en chargera)
-        const status = await checkScrapStatus();
-        if (status !== "running") {
-            button.disabled = false;
-            button.textContent = "Rafraichir";
-        }
+        // Réactiver le bouton
+        button.disabled = false;
     }
 })
 
@@ -322,11 +273,7 @@ detail.addEventListener('click', async (event) => {
         loadMoreBtn.classList.remove("hidden")
     }
     main.classList.remove("hidden")
-    // Vérifier le statut avant de réactiver le bouton
-    const status = await checkScrapStatus();
-    if (status !== "running") {
-        button.disabled = false;
-        button.textContent = "Rafraichir";
-        document.querySelector(".category-buttons").classList.remove("disabled");
-    }
+    // Réactiver le bouton de rechargement et les filtres
+    button.disabled = false;
+    document.querySelector(".category-buttons").classList.remove("disabled");
 })
