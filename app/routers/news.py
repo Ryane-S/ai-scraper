@@ -3,6 +3,7 @@ from datetime import datetime
 from fastapi import APIRouter, BackgroundTasks, Depends, HTTPException
 from sqlalchemy.orm import Session
 
+from app.core.security import verify_api_key
 from app.core.database import get_db
 from app.crud.article import *
 from app.schemas.article import ArticleResponse
@@ -41,7 +42,7 @@ def get_news(skip:int = 0,
     """Route pour obtenir la liste de tous les articles."""
     return get_all_articles(db, skip=skip, limit=limit)
 
-@router.post("/scrape")
+@router.post("/scrape", dependencies=[Depends(verify_api_key)])
 def trigger_scrape(bg_tasks: BackgroundTasks):
     """Route pour déclencher le scraper en background."""
     if actual_state["status"] == "running":

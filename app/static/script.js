@@ -3,6 +3,7 @@ console.log("Script chargé !")
 let allArticles = []
 let currentCategory = "all"
 let currentDisplayedArticles = 20
+let hasMoreArticles = true
 
 // Méthode qui fetch la liste des articles
 async function loadArticles(skip=0, limit=20){
@@ -157,6 +158,8 @@ function displayCategoryButtons() {
 async function init() {
     try {
         allArticles = await loadArticles();
+        // Si on a reçu 20 articles, il en reste peut-être d'autres
+        hasMoreArticles = allArticles.length === 20;
         displayArticles();
         displayCategoryButtons();
         if (Object.entries(allArticles).length != 0){
@@ -164,6 +167,10 @@ async function init() {
         }
         else {
             document.getElementById("all-btn").classList.add("hidden");
+        }
+        // Cache le bouton "Charger plus" s'il n'y a pas plus de 20 articles
+        if (!hasMoreArticles) {
+            loadMoreBtn.classList.add("hidden");
         }
     } catch (error) {
         console.error(error);
@@ -175,12 +182,15 @@ init();
 const loadMoreBtn = document.getElementById("load-more-btn")
 loadMoreBtn.addEventListener('click', async () => {
     if (Object.entries(allArticles).length == 0) return;
-    const newArticles = await loadArticles(currentDisplayedArticles, 20)
-    currentDisplayedArticles += Object.entries(newArticles).length
-    allArticles.push(...newArticles)
-    displayArticles()
-    if (currentDisplayedArticles == 50) {
-        loadMoreBtn.classList.add("hidden")
+    const newArticles = await loadArticles(currentDisplayedArticles, 20);
+    currentDisplayedArticles += newArticles.length;
+    allArticles.push(...newArticles);
+    displayArticles();
+
+    // Si on a reçu moins de 20 articles, on est à la fin
+    hasMoreArticles = newArticles.length === 20;
+    if (!hasMoreArticles) {
+        loadMoreBtn.classList.add("hidden");
     }
 })
 
@@ -193,11 +203,10 @@ categoryButtons.addEventListener('click', (event) => {
     currentCategory = btn.dataset.category;
     displayArticles();
     updateActiveButton(btn);
-    // On ne cache le bouton "Charger plus" que si on n'est PAS sur "Tous"
-    if (currentCategory !== "all") {
-        loadMoreBtn.classList.add("hidden");
-    } else if (currentDisplayedArticles != 50) {
-        // Retour sur "Tous" : on réaffiche le bouton s'il reste des articles à charger
+    // On ne cache le bouton "Charger plus" que si on n'est PAS sur "Tous" ou s'il n'y a plus d'articles
+    if (currentCategory !== "all" || !hasMoreArticles) {
+        loadMoreBtn.classList.add('hidden');
+    } else {
         loadMoreBtn.classList.remove('hidden');
     }
 });
@@ -223,6 +232,7 @@ button.addEventListener('click', async () => {
         // Reset des variables d'état (compteur de pagination + filtre catégorie)
         currentDisplayedArticles = 20;
         currentCategory = "all";
+        hasMoreArticles = allArticles.length === 20;
 
         // Afficher les articles et régénérer les boutons de catégories
         displayArticles();
@@ -236,8 +246,12 @@ button.addEventListener('click', async () => {
         allBtn.classList.add("active");
         allBtn.classList.remove("hidden");
 
-        // Réafficher le bouton "Charger plus" (il avait peut-être été caché)
-        loadMoreBtn.classList.remove("hidden");
+        // Réafficher ou cacher le bouton "Charger plus" selon hasMoreArticles
+        if (hasMoreArticles) {
+            loadMoreBtn.classList.remove("hidden");
+        } else {
+            loadMoreBtn.classList.add("hidden");
+        }
     }
     catch (error) {
         console.error("Erreur: ", error);
@@ -269,7 +283,8 @@ detail.addEventListener('click', async (event) => {
     const backButton = event.target.closest('#back-btn');
     if (!backButton) return;
     detail.classList.remove("visible")
-    if (currentDisplayedArticles != 50) {
+    // Réafficher le bouton seulement si on est sur "Tous" et qu'il reste des articles
+    if (currentCategory === "all" && hasMoreArticles) {
         loadMoreBtn.classList.remove("hidden")
     }
     main.classList.remove("hidden")
