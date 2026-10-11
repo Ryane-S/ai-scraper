@@ -14,6 +14,7 @@ services:
       interval: 5s
       timeout: 5s
       retries: 5
+    restart: unless-stopped
 
   app:
     build:
@@ -30,6 +31,7 @@ services:
       - "8000:8000"
     volumes:
       - hf_cache:/root/.cache/huggingface
+    restart: unless-stopped
 
 volumes:
   postgres_data:
