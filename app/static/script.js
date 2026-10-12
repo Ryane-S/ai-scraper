@@ -106,17 +106,7 @@ function showDetail(article){
         }
     }
 
-    let articleOverviewData;
-
-    if (!article.summary) {
-        articleOverviewData = `
-        <button type="button" id="back-btn">Retour</button>
-        <h1>Article indisponible :(</h1>
-        <h2>Veuillez réessayer plus tard.</h2>
-        `
-    }
-    else {
-        articleOverviewData = `
+    let articleOverviewData = `
         <button type="button" id="back-btn">Retour</button>
         <h3><a href="${article.url}">Click here to read the article</a></h3>
         <h1 class="article-title-detail">${article.title}</h1>
@@ -126,8 +116,7 @@ function showDetail(article){
         <p>
             ${article.summary || "Résumé non disponible."}
         </p>
-        `
-    }
+    `
 
     articleOverview.innerHTML = articleOverviewData
     articleOverview.classList.add("visible")
