@@ -14,7 +14,7 @@ body, html {
 }
 
 .title {
-    padding: 20px 20px 20px;
+    padding: 20px;
     text-align: center;
 }
 
@@ -34,7 +34,7 @@ body, html {
     display: block;
     font-size: clamp(0.9rem, 3vw, 1.25rem);
     font-weight: 400;
-    color: hsl(218, 5%, 47%);
+    color: hsl(218deg 5% 47%);
     letter-spacing: 2px;
     text-transform: uppercase;
     margin-top: 16px;
