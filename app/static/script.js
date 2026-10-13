@@ -259,7 +259,7 @@ main.addEventListener('click', async (event) => {
     if (!card) return;
     const articleId = card.dataset.id;
     const article = await loadArticle(articleId);
-    window.scrollTo({top:0, behavior:'smooth'})
+    document.getElementById("refresh-btn").scrollIntoView({ behavior: 'instant', block: 'start' });
     button.disabled = true;
     loadMoreBtn.classList.add("hidden")
     main.classList.add("hidden")
