@@ -14,15 +14,15 @@ body, html {
 }
 
 .title {
-    padding: 60px 20px 20px;
+    padding: 20px 20px 20px;
     text-align: center;
 }
 
 .main-title {
-    font-size: clamp(2rem, 5vw, 3.5rem);
+    font-size: clamp(3rem, 10vw, 8rem);
     font-weight: 800;
-    letter-spacing: -2px;
-    margin: 0;
+    letter-spacing: 4px;
+    margin: -10px;
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -30,13 +30,14 @@ body, html {
 }
 
 .title::after {
-    content: "Veille tech & IA, automatisée";
+    content: "News Scraper & Summarizer";
     display: block;
-    font-size: 1rem;
+    font-size: clamp(0.9rem, 3vw, 1.25rem);
     font-weight: 400;
-    color: #9ca3af;
-    letter-spacing: 0;
-    margin-top: 12px;
+    color: hsl(218, 5%, 47%);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-top: 16px;
 }
 
 .scraping-button {

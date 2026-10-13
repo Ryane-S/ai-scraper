@@ -3,7 +3,7 @@ from pydantic_settings import BaseSettings
 
 class Settings(BaseSettings):
     # Métadonnées (avec valeurs par défaut)
-    app_name: str = "AI News Scraper"
+    app_name: str = "SIFT - News Scraper & Summarizer"
     version: str = "0.1.0"
     description: str = "Un scraper d'actualité avec résumé automatique"
 
