@@ -66,7 +66,7 @@ function displayArticles() {
         // Construire la chaine contenant les infos d'un article
         const articleData = `
         <article class="article" data-id="${article.id}">
-            <img src="${image_url}" alt="image" class="article-img">
+            <img src="${image_url}" alt="${article.title}" class="article-img">
             <div class="article-date">${formattedDate}</div>
             <div class="article-source">${article.source}</div>
             <div class="article-category">${article.category}</div>
@@ -111,7 +111,7 @@ function showDetail(article){
         <h3><a href="${article.url}">Click here to read the article</a></h3>
         <h1 class="article-title-detail">${article.title}</h1>
         <div class="article-date-detail">${formattedDate}</div>
-        <img src="${image_url}" alt="image" class="article-img-detail">
+        <img src="${image_url}" alt="${article.title}" class="article-img-detail">
         <h2 class="article-summary">Summary</h2>
         <p>
             ${article.summary || "Résumé non disponible."}
