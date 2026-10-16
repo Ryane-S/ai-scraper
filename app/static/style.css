@@ -18,6 +18,12 @@ body, html {
     text-align: center;
 }
 
+.legal-notices-title {
+    padding: 20px;
+    text-align: center;
+    font-size: 1.2rem;
+}
+
 .main-title {
     font-size: clamp(3rem, 10vw, 8rem);
     font-weight: 800;
@@ -43,6 +49,11 @@ body, html {
 .scraping-button {
     text-align: center;
     margin: 20px 0 30px;
+}
+
+.legal-notices-details{
+    margin: 20px 30px 30px;
+    font-size: 1.2rem;
 }
 
 #refresh-btn {
